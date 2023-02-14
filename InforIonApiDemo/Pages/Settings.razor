@@ -1,0 +1,105 @@
+@page "/settings"
+@inject ISnackbar Snackbar
+@inject IConfiguration config
+@inject NavigationManager NavigationManager;
+@inject IDialogService DialogService
+
+<h1>Application Settings</h1>
+
+<br />
+<MudPaper MaxWidth="800px" Elevation="3" Class="d-flex flex-column justify-space-between py-6 pa-3 ma-0" style="height:500px;overflow: auto;">
+    <MudContainer Fixed="false" >
+        <MudCard Outlined=true style="margin 5px;">
+            <MudCardHeader>
+                <MudText Class="fw-bold">
+                    Infor Connection Information
+                </MudText>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudText>
+                    You will need to obtain this information from ION API setup. Go to ION API > Authorized Apps.
+                    If there is not already an application created you will need to create one.
+                </MudText>
+                <br />
+                <MudText>
+                    Create a Backend Service with the access token expiring in 2 hours.
+                    Download the credentials for this information. It is recommended to rename the file to the name of the environment.
+                    Upload using the form below.
+                    Make sure to scroll to the bottome and update the Mongoose Config.
+                </MudText>
+            </MudCardContent>
+            <MudGrid Spacing="2" Justify="Justify.SpaceEvenly" style="margin 15px;">
+            <MudCard>
+                <MudSelect @bind-Value="SelectedFile" Margin="Margin.Dense" T="string" Label="Select Connection" Variant="Variant.Outlined" >
+                    @foreach (var item in uploadedFiles)
+                    {
+                        <MudSelectItem Value="@item">@item</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudCard>
+            <MudCard>
+                <MudSelect @bind-Value="SelectedFileToDelete" Margin="Margin.Dense" T="string" Label="Select File To Delete" Variant="Variant.Outlined" >
+                    @foreach (var item in uploadedFiles)
+                    {
+                        <MudSelectItem Value="@item">@item</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudCard>
+            </MudGrid>
+        </MudCard>
+        <br />
+        <MudCard Outlined=true>
+            <MudForm style="margin-left:25px; margin-right:25px; margin-top:15px; margin-bottom:15px;">
+                <MudTextField T="string" Variant="Variant.Outlined" Label="TI" @bind-Value="inforConnection.ti" Disabled=true></MudTextField>
+                <MudTextField T="string" Variant="Variant.Outlined" Label="CN" @bind-Value="inforConnection.cn" Disabled=true></MudTextField>
+                <MudTextField T="string" Variant="Variant.Outlined" Label="DT" @bind-Value="inforConnection.dt" Disabled=true></MudTextField>
+                <MudTextField T="string" Variant="Variant.Outlined" Label="CI" @bind-Value="inforConnection.ci" Disabled=true></MudTextField>
+                <MudTextField T="string" Variant="Variant.Outlined" Label="CS" @bind-Value="inforConnection.cs" Disabled=true></MudTextField>
+                <MudTextField T="string" Variant="Variant.Outlined" Label="IU" @bind-Value="inforConnection.iu" Disabled=true></MudTextField>
+                <MudTextField T="string" Variant="Variant.Outlined" Label="PU" @bind-Value="inforConnection.pu" Disabled=true></MudTextField>
+                <MudTextField T="string" Variant="Variant.Outlined" Label="OA" @bind-Value="inforConnection.oa" Disabled=true></MudTextField>
+                <MudTextField T="string" Variant="Variant.Outlined" Label="OT" @bind-Value="inforConnection.ot" Disabled=true></MudTextField>
+                <MudTextField T="string" Variant="Variant.Outlined" Label="OR" @bind-Value="inforConnection.or" Disabled=true></MudTextField>
+                <MudTextField T="string" Variant="Variant.Outlined" Label="EV" @bind-Value="inforConnection.ev" Disabled=true></MudTextField>
+                <MudTextField T="string" Variant="Variant.Outlined" Label="V" @bind-Value="inforConnection.v" Disabled=true></MudTextField>
+                <MudTextField T="string" Variant="Variant.Outlined" Label="SAAK" @bind-Value="inforConnection.saak" Disabled=true ></MudTextField>
+                <MudTextField T="string" Variant="Variant.Outlined" Label="SASK" @bind-Value="inforConnection.sask" Disabled=true ></MudTextField>
+            </MudForm>
+        </MudCard>
+        <br />
+        <MudCard Outlined=true>
+            <MudForm style="margin-left:25px; margin-right:25px; margin-top:15px; margin-bottom:15px;">
+                <MudTextField T="string" Variant="Variant.Outlined" Label="Mongoose Config" @bind-Value="programSettings.MongooseConfig" Disabled=false></MudTextField>
+            </MudForm>
+            <MudButton Disabled="@_processing" OnClick="UpdateProgramSettings" Variant="Variant.Filled" Color="Color.Primary">
+                @if (_processing)
+                {
+                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                    <MudText Class="ms-2">Processing</MudText>
+                }
+                else
+                {
+                    <MudText>Update Program Settings</MudText>
+                }
+            </MudButton>
+        </MudCard>
+    </MudContainer>
+</MudPaper>
+<MudStack Style="max-width:800px;">
+    <MudFileUpload T="IReadOnlyList<IBrowserFile>" OnFilesChanged="OnInputFileChanged" Hidden="false" Class="flex-1" InputClass="absolute mud-width-full mud-height-full overflow-hidden z-20" InputStyle="opacity:0"
+                   @ondragenter="@SetDragClass" @ondragleave="@ClearDragClass" @ondragend="@ClearDragClass" MaximumFileCount="1">
+        <ButtonTemplate>
+            <MudPaper Height="300px" Outlined="true" Class="@DragClass">
+                <MudText Typo="Typo.h6">Drag and drop a file here or click to open a file picker</MudText>
+                @foreach (var file in fileNames)
+                {
+                    <MudChip Color="Color.Dark" Text="@file" />
+                }
+            </MudPaper>
+        </ButtonTemplate>
+    </MudFileUpload>
+    <MudToolBar DisableGutters="true" Class="gap-4">
+        <MudButton OnClick="Upload" Disabled="@(!fileNames.Any())" Color="Color.Primary" Variant="Variant.Filled">Upload</MudButton>
+        <MudButton OnClick="Clear" Disabled="@(!fileNames.Any())" Color="Color.Error" Variant="Variant.Filled">Clear</MudButton>
+    </MudToolBar>
+</MudStack>

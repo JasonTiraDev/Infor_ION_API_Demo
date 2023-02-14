@@ -1,0 +1,30 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<PageTitle>InforIonApiDemo</PageTitle>
+
+<MudLayout>
+    <MudPaper Elevation="25">
+        <MudToolBar>
+            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+            <MudText Typo="Typo.h5" Class="ml-3">Job Release and Printing</MudText>
+            <MudSpacer />
+            <LoginDisplay />
+            <MudIconButton Icon="@Icons.Material.Outlined.Settings" Color="Color.Inherit" />
+            <MudToggleIconButton @bind-Toggled="@_mudThemeProvider.IsDarkMode"
+                Icon="@Icons.Material.Filled.LightMode" Color="@Color.Error" Title="Light"
+                ToggledIcon="@Icons.Material.Filled.DarkMode" ToggledColor="@Color.Success" ToggledTitle="Dark"/>
+        </MudToolBar>
+    </MudPaper>
+    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+        <NavMenu/>
+    </MudDrawer>
+    <MudMainContent>
+        <MudContainer Style="margin-left:5px;">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>

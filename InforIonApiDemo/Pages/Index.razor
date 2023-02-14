@@ -1,0 +1,31 @@
+﻿@page "/"
+
+<PageTitle>Welcome</PageTitle>
+
+<MudText>
+    Welcome to a demo application on how to access the Infor ION API
+</MudText>
+<br/>
+<MudText>
+    This application is a Blazor WebAssembly application that uses the Infor ION API to retrieve data from Infor ION.
+    The main goal is simply to demonstrate the how, as that was my struggle.
+    I will do my best to make sure the code is commented and explain what it is doing.
+</MudText>
+<MudPaper>
+
+</MudPaper>
+
+
+<br/>
+
+@if(_NoConnectionSettings != null)
+{
+    <MudCard>
+        <MudCardContent>
+            <MudText>
+                It looks like you haven't configured your connection settings yet. 
+                Please go to the <MudLink  href="settings">Settings</MudLink> page to configure your connection settings.
+            </MudText>
+        </MudCardContent>
+    </MudCard>
+}

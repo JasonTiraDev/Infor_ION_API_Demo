@@ -1,0 +1,20 @@
+@page "/fileupload"
+@inject IConfiguration config
+
+<PageTitle>File Upload</PageTitle>
+
+<h1>File Upload</h1>
+
+<InputFile OnChange="@LoadFiles" class="form-control" multiple accept=".json, .ionapi, .txt" />
+
+@if (errors.Count > 0)
+{
+    <h2>Errors</h2>
+    <ul class="text-danger">
+        @foreach (var error in errors)
+        {
+            <li>@error</li>
+        }
+    </ul>
+}
+
