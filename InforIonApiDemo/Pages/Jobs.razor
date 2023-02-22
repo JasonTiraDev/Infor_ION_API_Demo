@@ -1,0 +1,30 @@
+@page "/Jobs"
+@inject IConfiguration _config
+
+
+<PageTitle>Jobs</PageTitle>
+<MudText> List of jobs pulled from ION API - CSI </MudText>
+
+<br />
+
+<MudPaper MaxHeight="800px" MaxWidth="800px">
+    <MudTable T="Models.Jobs" Jobs="@jobEnum" Hover="true" FixedHeader="true" Dense="true">
+        <HeaderContent>
+            <MudTh>Job</MudTh>
+            <MudTh>Suffix</MudTh>
+            <MudTh>MoJobDescription</MudTh>
+            <MudTh>Item</MudTh>
+            <MudTh>ItemID</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Job">@context.Item</MudTd>
+            <MudTd DataLabel="Suffix">@context.Suffix</MudTd>
+            <MudTd DataLabel="Description">@context.MOJobDescription</MudTd> 
+            <MudTd DataLabel="Item">@context._ItemId</MudTd>
+            <MudTd DataLabel="ItemID">@context._ItemId</MudTd>
+        </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[]{5, 10, 25, 50, 100}" />
+            </PagerContent>
+    </MudTable>
+</MudPaper>
