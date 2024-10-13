@@ -93,7 +93,7 @@
                 <MudText Typo="Typo.h6">Drag and drop a file here or click to open a file picker</MudText>
                 @foreach (var file in fileNames)
                 {
-                    <MudChip Color="Color.Dark" Text="@file" />
+                    <MudChip T='String' Color="Color.Dark" Text="@file" />
                 }
             </MudPaper>
         </ButtonTemplate>
