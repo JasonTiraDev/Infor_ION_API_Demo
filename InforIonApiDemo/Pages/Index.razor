@@ -1,31 +1,27 @@
 ﻿@page "/"
 
+@using MudBlazor
+
 <PageTitle>Welcome</PageTitle>
 
-<MudText>
-    Welcome to a demo application on how to access the Infor ION API
-</MudText>
-<br/>
-<MudText>
-    This application is a Blazor WebAssembly application that uses the Infor ION API to retrieve data from Infor ION.
-    The main goal is simply to demonstrate the how, as that was my struggle.
-    I will do my best to make sure the code is commented and explain what it is doing.
-</MudText>
-<MudPaper>
+<MudContainer MaxWidth="MaxWidth.Medium">
+    <MudStack Spacing="2">
+        <MudText Typo="Typo.h4" GutterBottom>
+            Welcome to the Infor ION API Demo Application
+        </MudText>
+        <MudText>
+            This Blazor WebAssembly application demonstrates how to access the Infor ION API to retrieve data. The main goal is to provide a clear example, addressing common challenges. The code is thoroughly commented to explain its functionality.
+        </MudText>
 
-</MudPaper>
-
-
-<br/>
-
-@if(_NoConnectionSettings != null)
-{
-    <MudCard>
-        <MudCardContent>
-            <MudText>
-                It looks like you haven't configured your connection settings yet. 
-                Please go to the <MudLink  href="settings">Settings</MudLink> page to configure your connection settings.
-            </MudText>
-        </MudCardContent>
-    </MudCard>
-}
+        @if (_NoConnectionSettings != null)
+        {
+            <MudCard Elevation="4" Class="mt-4">
+                <MudCardContent>
+                    <MudText>
+                        It appears that your connection settings are not configured. Please navigate to the <MudLink Href="settings">Settings</MudLink> page to set them up.
+                    </MudText>
+                </MudCardContent>
+            </MudCard>
+        }
+    </MudStack>
+</MudContainer>

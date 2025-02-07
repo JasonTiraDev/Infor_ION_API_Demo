@@ -1,17 +1,21 @@
-<MudDialog>
-    <DialogContent>
-        Delete File?
-    </DialogContent>
-    <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
-    </DialogActions>
-</MudDialog>
-@code 
-{
-    // Dialog to display on confirm delete
-    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+@inject IDialogService DialogService
 
-    void Submit() => MudDialog.Close(DialogResult.Ok(true));
-    void Cancel() => MudDialog.Cancel();
+<MudDialog>
+    <MudDialogTitle>Delete Confirmation</MudDialogTitle>
+    <MudDialogContent>
+        Are you sure you want to delete this file?
+    </MudDialogContent>
+    <MudDialogActions>
+        <MudButton OnClick="Cancel" Color="Color.Default">Cancel</MudButton>
+        <MudButton OnClick="Submit" Color="Color.Primary" Variant="Variant.Filled">Ok</MudButton>
+    </MudDialogActions>
+</MudDialog>
+
+@code
+{
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; }
+
+    void Submit() => MudDialog?.Close(DialogResult.Ok(true));
+    void Cancel() => MudDialog?.Cancel();
 }
+

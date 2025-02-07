@@ -1,28 +1,41 @@
 @page "/Lots"
-@inject IConfiguration _config 
-
+@inject IConfiguration _config
 
 <PageTitle>Lots</PageTitle>
-<MudText>List of lots pulled from ION API - CSI</MudText>
 
-<br/>
+<MudContainer MaxWidth="MaxWidth.Large" Class="my-4">
+    <!-- Page Header -->
+    <MudPaper Class="pa-4 mb-4 mx-auto" Elevation="5" MaxWidth="800px">
+        <MudText Typo="Typo.h4" Align="Align.Center" Class="mb-2">
+            Lots List
+        </MudText>
+        <MudText Typo="Typo.subtitle1" Align="Align.Center">
+            List of lots pulled from ION API - CSI
+        </MudText>
+        <!-- Search Field -->
+        <MudTextField @bind-Value="searchString" Placeholder="Search lots..."
+                      Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search"
+                      Class="mt-4" />
+    </MudPaper>
 
-<MudPaper MaxHeight="800px" MaxWidth="800px">
-    <MudTable Items="@lotEnum" Hover="true" FixedHeader="true" Dense="true">
-        <HeaderContent>
-            <MudTh>Lot</MudTh>
-            <MudTh>Item</MudTh>
-            <MudTh>Description</MudTh>
-            <MudTh>_ItemId</MudTh>
-        </HeaderContent>
-        <RowTemplate>
-            <MudTd>@context.Lot</MudTd>
-            <MudTd>@context.Item</MudTd>
-            <MudTd>@context.Description</MudTd>
-            <MudTd>@context._ItemId</MudTd>
-        </RowTemplate>
-        <PagerContent>
-            <MudTablePager PageSizeOptions="new int[] { 5, 10, 20, 50, 100 }" />
-        </PagerContent>
-    </MudTable>
-</MudPaper>
+    <!-- Lots Table -->
+    <MudPaper MaxHeight="800px" MaxWidth="800px" Class="mx-auto" Elevation="5">
+        <MudTable Items="FilteredLots" Hover="true" FixedHeader="true" Dense="true">
+            <HeaderContent>
+                <MudTh>Lot</MudTh>
+                <MudTh>Item</MudTh>
+                <MudTh>Description</MudTh>
+                <MudTh>ItemId</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Lot">@context.Lot</MudTd>
+                <MudTd DataLabel="Item">@context.Item</MudTd>
+                <MudTd DataLabel="Description">@context.Description</MudTd>
+                <MudTd DataLabel="ItemId">@context._ItemId</MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[]{5, 10, 20, 50, 100}" />
+            </PagerContent>
+        </MudTable>
+    </MudPaper>
+</MudContainer>

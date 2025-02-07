@@ -1,30 +1,43 @@
 @page "/Jobs"
 @inject IConfiguration _config
 
-
 <PageTitle>Jobs</PageTitle>
-<MudText> List of jobs pulled from ION API - CSI </MudText>
 
-<br />
+<MudContainer MaxWidth="MaxWidth.Large" Class="my-4">
+    <!-- Page Header -->
+    <MudPaper Class="pa-4 mb-4 mx-auto" Elevation="5" MaxWidth="800px">
+        <MudText Typo="Typo.h4" Align="Align.Center" Class="mb-2">
+            Jobs List
+        </MudText>
+        <MudText Typo="Typo.subtitle1" Align="Align.Center">
+            List of jobs pulled from ION API - CSI
+        </MudText>
+        <!-- Search Field -->
+        <MudTextField @bind-Value="searchString" Placeholder="Search jobs..."
+                      Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search"
+                      Class="mt-4" />
+    </MudPaper>
 
-<MudPaper MaxHeight="800px" MaxWidth="800px">
-    <MudTable T="Models.Jobs" Jobs="@jobEnum" Hover="true" FixedHeader="true" Dense="true">
-        <HeaderContent>
-            <MudTh>Job</MudTh>
-            <MudTh>Suffix</MudTh>
-            <MudTh>MoJobDescription</MudTh>
-            <MudTh>Item</MudTh>
-            <MudTh>ItemID</MudTh>
-        </HeaderContent>
-        <RowTemplate>
-            <MudTd DataLabel="Job">@context.Item</MudTd>
-            <MudTd DataLabel="Suffix">@context.Suffix</MudTd>
-            <MudTd DataLabel="Description">@context.MOJobDescription</MudTd> 
-            <MudTd DataLabel="Item">@context._ItemId</MudTd>
-            <MudTd DataLabel="ItemID">@context._ItemId</MudTd>
-        </RowTemplate>
+    <!-- Jobs Table -->
+    <MudPaper MaxHeight="800px" MaxWidth="800px" Class="mx-auto" Elevation="5">
+        <MudTable Items="FilteredJobs" Hover="true" FixedHeader="true" Dense="true">
+            <HeaderContent>
+                <MudTh>Job</MudTh>
+                <MudTh>Suffix</MudTh>
+                <MudTh>MOJobDescription</MudTh>
+                <MudTh>Item</MudTh>
+                <MudTh>ItemID</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Job">@context.Item</MudTd>
+                <MudTd DataLabel="Suffix">@context.Suffix</MudTd>
+                <MudTd DataLabel="MOJobDescription">@context.MOJobDescription</MudTd>
+                <MudTd DataLabel="Item">@context._ItemId</MudTd>
+                <MudTd DataLabel="ItemID">@context._ItemId</MudTd>
+            </RowTemplate>
             <PagerContent>
                 <MudTablePager PageSizeOptions="new int[]{5, 10, 25, 50, 100}" />
             </PagerContent>
-    </MudTable>
-</MudPaper>
+        </MudTable>
+    </MudPaper>
+</MudContainer>
